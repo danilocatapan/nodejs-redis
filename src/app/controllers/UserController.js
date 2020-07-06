@@ -1,3 +1,5 @@
+import * as faker from 'faker';
+
 export default {
   async store(req, res) {
     const { name, email } = req.body;
@@ -5,7 +7,7 @@ export default {
     const user = {
       name,
       email,
-      password:  '123'
+      password: faker.internet.password(15, false)
     };
     
     return res.json(user);
