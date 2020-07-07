@@ -1,5 +1,6 @@
 import * as faker from 'faker';
-import Mail from '../lib/Mail';
+
+import Queue from '../lib/Queue';
 
 export default {
   async store(req, res) {
@@ -11,12 +12,7 @@ export default {
       password: faker.internet.password(15, false)
     };
 
-    await Mail.sendMail({
-      from: 'Red-Potion <contact@red-potion.com>',
-      to: `${name} <${email}>`,
-      subject: 'User register',
-      html: `Hello ${name}, welcome to Red-Potion.`
-    })
+    await Queue.add('RegistrationMail', { user });
     
     return res.json(user);
   }
